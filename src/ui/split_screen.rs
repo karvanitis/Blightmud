@@ -92,7 +92,7 @@ impl StatusArea {
             info = if info.is_empty() {
                 custom_info.to_string()
             } else {
-                format!("{info}━ {custom_info} ")
+                format!("{info}─ {custom_info} ")
             };
         }
 
@@ -118,15 +118,15 @@ impl StatusArea {
             "{}{}{}",
             termion::cursor::Goto(1, line as u16),
             termion::clear::CurrentLine,
-            Fg(color::Green),
+            Fg(color::White),
         )?;
 
         let custom_info = if !custom_info.trim().is_empty() {
             format!(
-                "━ {}{}{} ",
+                "─ {}{}{} ",
                 custom_info.trim(),
                 Fg(color::Reset),
-                Fg(color::Green)
+                Fg(color::White)
             )
         } else {
             "".to_string()
@@ -137,7 +137,7 @@ impl StatusArea {
 
         write!(
             screen,
-            "{:━<1$}",
+            "{:─<1$}",
             &custom_info,
             self.width as usize + stripped_chars
         )?; // Print separator
@@ -344,8 +344,8 @@ impl UserInterface for SplitScreen {
                 "{}{}> {}{}",
                 termion::style::Reset,
                 Fg(color::LightYellow),
-                line,
                 Fg(color::Reset),
+                line,
             );
             for line in wrap_line(
                 line,
@@ -762,10 +762,10 @@ impl SplitScreen {
             )?;
             write!(
                 self.screen,
-                "{}{}{:━<4$}{}",
+                "{}{}{:─<4$}{}",
                 cursor::Goto(1, scroll_range + self.output_start_line),
                 color::Fg(color::Green),
-                "━ (scroll) ",
+                "─ (scroll) ",
                 color::Fg(color::Reset),
                 self.width as usize
             )?;

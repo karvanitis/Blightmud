@@ -23,10 +23,10 @@ pub const COMMAND_SEARCH: &str = "command_search";
 pub const SMART_HISTORY: &str = "smart_history";
 pub const ECHO_INPUT: &str = "echo_input";
 pub const LAST_COMMAND: &str = "last_command";
-
+pub const CAPTURE_PROMPT: &str = "capture_prompt";
 pub const KEEPALIVE_ENABLED: &str = "keepalive_enabled";
 
-pub const SETTINGS: [&str; 14] = [
+pub const SETTINGS: [&str; 15] = [
     LOGGING_ENABLED,
     TTS_ENABLED,
     MOUSE_ENABLED,
@@ -40,6 +40,7 @@ pub const SETTINGS: [&str; 14] = [
     SMART_HISTORY,
     ECHO_INPUT,
     LAST_COMMAND,
+    CAPTURE_PROMPT,
     KEEPALIVE_ENABLED,
 ];
 
@@ -78,6 +79,7 @@ impl Default for Settings {
         settings.insert(SMART_HISTORY.to_string(), false);
         settings.insert(ECHO_INPUT.to_string(), true);
         settings.insert(LAST_COMMAND.to_string(), true);
+        settings.insert(CAPTURE_PROMPT.to_string(), true);
         settings.insert(KEEPALIVE_ENABLED.to_string(), true);
         Self { settings }
     }
@@ -90,10 +92,8 @@ impl SaveData for Settings {
 
     fn on_load(&mut self) {
         let default = Self::default();
-        if default.settings.len() != self.settings.len() {
-            for (key, val) in default.settings {
-                self.settings.entry(key).or_insert(val);
-            }
+        for (key, val) in default.settings {
+            self.settings.entry(key).or_insert(val);
         }
     }
 

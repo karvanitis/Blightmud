@@ -329,6 +329,7 @@ alias.add("^(?:/search|/s ).*$", function(m)
     if #args == 1 then
         info("USAGE: /search <regex>", "USAGE: /s <regex>")
     else
-        search.search(args[2])
+        local str = table.concat(args, " ", 2)
+        search.search(str)
     end
 end)
